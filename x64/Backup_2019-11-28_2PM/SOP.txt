@@ -1,0 +1,35 @@
+1. Include all MFC addons in VS Pro install
+2. MAke sure build envorment is 64X and on relese mode
+3. Navigate to project properties
+4. Under Configuration Properies -> Advanced change use of MFC to shared DLL mode
+5. Change to Unicode Character set
+6. Under VC++ change Library directories to foler containig VHX4RC.lib 
+7. Under Linker-> Input add VHX4RC.lib
+8. Add a copy of VHX4RC.dll to the same folder conatinning the built exe of the program.
+9. Go to system and ensure that the subsytem is console(NOT WINDOWS!!!)
+
+
+
+
+
+conda install pandas
+conda install requests
+
+Project Library Structure
+--------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+Current Issues (NEEDS ADDRESSING)!!!
+---------------------------------------------------------------------------------------------
+1.Require a mapping from the VHX4RC.h getstageposistion function to the actual UI possition as this position mensurement can be as far a 500 micrometers off. Must find exact function to transform. Unsure of why mesurements are not exactly the same but highly likeley a theta rotation in the xy plane.(Find way to verify as current mapping converts 4 most extream cases correctly but all others not converted correctly)
+
+2. Must develop a good point structure in order to itorate through an array of structures containing converted position data. (for each plate type, but start with 96 well)
+
+3.Current attempts at iterating through array object seem to throw error with index out of bounds.
+Likely an easy fix but will require research as to why the wrning is being thrown in the first place
+

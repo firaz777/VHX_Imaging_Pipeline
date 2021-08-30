@@ -1,0 +1,19 @@
+﻿  Source.cpp
+C:\Users\VHX Microscope\source\repos\testingrun\testingrun\Source.cpp(245,18): warning C4244: 'initializing': conversion from '_Rep' to 'int', possible loss of data
+C:\Users\VHX Microscope\source\repos\testingrun\testingrun\Source.cpp(245,18): warning C4244:         with
+C:\Users\VHX Microscope\source\repos\testingrun\testingrun\Source.cpp(245,18): warning C4244:         [
+C:\Users\VHX Microscope\source\repos\testingrun\testingrun\Source.cpp(245,18): warning C4244:             _Rep=__int64
+C:\Users\VHX Microscope\source\repos\testingrun\testingrun\Source.cpp(245,18): warning C4244:         ]
+C:\Users\VHX Microscope\source\repos\testingrun\testingrun\Source.cpp(343,22): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\VHX Microscope\source\repos\testingrun\testingrun\Source.cpp(362,22): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\VHX Microscope\source\repos\testingrun\testingrun\Source.cpp(422,9): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'std::string'
+C:\Users\VHX Microscope\source\repos\testingrun\testingrun\Source.cpp(425,9): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'std::string'
+C:\Users\VHX Microscope\source\repos\testingrun\testingrun\Source.cpp(466,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\VHX Microscope\source\repos\testingrun\testingrun\Source.cpp(468,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\VHX Microscope\source\repos\testingrun\testingrun\Source.cpp(469,17): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\VHX Microscope\source\repos\testingrun\testingrun\Source.cpp(393,19): warning C4101: 'TimeMag': unreferenced local variable
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 263 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  testingrun.vcxproj -> C:\Users\VHX Microscope\source\repos\testingrun\x64\Release\testingrun.exe

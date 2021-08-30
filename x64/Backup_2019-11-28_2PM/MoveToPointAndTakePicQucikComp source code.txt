@@ -1,0 +1,170 @@
+#include "stdio.h"
+#include <SDKDDKVer.h>
+#include "include/VHX4RC.h"
+#include <list>
+#include <iostream>
+#include <string>
+#include <array>
+
+
+//takes X,Y,PAth,ip
+
+//to do:
+//Make string parser thing for // folder path
+//make function to calc. angle
+//make a parser for the files
+HWND dummyHWND = ::CreateWindowA("STATIC", "Remote Accsess Mode", WS_VISIBLE, 0, 0, 100, 100, NULL, NULL, NULL, NULL);
+
+
+using namespace std;
+#define WM_APP 0x8000
+#define WM_APP_AUTO_FOCUS_COMPLETED (WM_APP + 1001)
+#define WM_APP_XY_STAGE_INITIALIZE_THETA_ORIENTATION_COMPLETED (WM_APP + 1002)
+#define WM_APP_QUICK_COMP_COMPLETED (WM_APP + 1000 )
+
+void print(VHX4RC_RESULT result)
+{
+
+
+	string strLog;
+
+
+
+	switch (result)
+	{
+	case VHX4RC_S_OK:
+		strLog += ("VHX4RC_S_OK");
+		break;
+	case VHX4RC_E_COMMAND_FAILED:
+		strLog += ("VHX4RC_E_COMMAND_FAILED");
+		break;
+	case VHX4RC_E_ALREADY_INITIALIZED:
+		strLog += ("VHX4RC_E_ALREADY_INITIALIZED");
+		break;
+	case VHX4RC_E_NOT_INITIALIZED:
+		strLog += ("VHX4RC_E_NOT_INITIALIZED");
+		break;
+	case VHX4RC_E_COMM_ERROR:
+		strLog += ("VHX4RC_E_COMM_ERROR");
+		break;
+	case VHX4RC_E_INVALID_ARGUMENT:
+		strLog += ("VHX4RC_E_INVALID_ARGUMENT");
+		break;
+	case VHX4RC_E_OUTOFMEMORY:
+		strLog += ("VHX4RC_E_OUTOFMEMORY");
+		break;
+	case VHX4RC_E_PATH_NOT_FOUND:
+		strLog += ("VHX4RC_E_PATH_NOT_FOUND");
+		break;
+	case VHX4RC_E_SAVE_FILE_FAILED:
+		strLog += ("VHX4RC_E_SAVE_FILE_FAILED");
+		break;
+	case VHX4RC_E_FILE_ALREADY_EXISTS:
+		strLog += ("VHX4RC_E_FILE_ALREADY_EXISTS");
+		break;
+	case VHX4RC_E_INVALID_MODE:
+		strLog += ("VHX4RC_E_INVALID_MODE");
+		break;
+	case VHX4RC_E_INVALID_STATE:
+		strLog += ("VHX4RC_E_INVALID_STATE");
+		break;
+	case VHX4RC_E_Z_STAGE_NOTHING:
+		strLog += ("VHX4RC_E_Z_STAGE_NOTHING");
+		break;
+	case VHX4RC_E_Z_STAGE_DISCONNECTED:
+		strLog += ("VHX4RC_E_Z_STAGE_DISCONNECTED");
+		break;
+	case VHX4RC_E_INVALID_HANDLE:
+		strLog += ("VHX4RC_E_INVALID_HANDLE");
+		break;
+	case VHX4RC_E_NOT_SUPPORT:
+		strLog += ("VHX4RC_E_NOT_SUPPORT");
+		break;
+	case VHX4RC_E_OUTOFCOMPLIMIT:
+		strLog += ("VHX4RC_E_OUTOFCOMPLIMIT");
+		break;
+	case VHX4RC_E_XY_STAGE_DISCONNECTED:
+		strLog += ("VHX4RC_E_XY_STAGE_DISCONNECTED");
+		break;
+	case VHX4RC_E_XY_STAGE_NOT_INITIALIZED:
+		strLog += ("VHX4RC_E_XY_STAGE_NOT_INITIALIZED");
+		break;
+	default:
+		CString strValue;
+
+		strLog = "Unknown";
+		break;
+	}
+	std::cout << strLog + "\n";
+}
+
+int main(int argc, char* argv[]) {
+	//look for command line arguments
+	printf("You have entered: %d arguments\n", argc);
+	int X, Y;
+	string Path,ip;
+	if (argc >= 5) {
+		X = strtol(argv[1], nullptr, 0);
+		Y = strtol(argv[2], nullptr, 0);
+		Path = argv[3];
+		ip = argv[4];
+		printf("X: %d,Y: %d\n", X, Y);
+
+	}
+	else {
+		printf("Defult\n");
+		X = 0;
+		Y = 0;
+		ip = "131.104.63.75";
+		Path = "D:\\WorkTermBOLD\\MicroscopeOutput\\ScriptOut";
+	}
+
+
+
+
+	//intializing
+	CString strAddress = ip.c_str();
+	printf("Connecting:");
+	VHX4RC_RESULT result = VHX4RC_Init(strAddress);
+	print(result);
+	Sleep(1000);
+
+	
+	printf("Moving XY Stage to Point");
+	result = VHX4RC_XYStageMoveTo(X, Y);
+	print(result);
+	Sleep(2000);
+	//VHX4RC_GetAutoFocusAreaPosition(autofocusX, autofocusY);
+
+	//for (unsigned int i = 0; i < 10; i++) {
+		//printf("Well number: %d\n", i);
+		//printf("Moving to Point:");
+		int x = (X);
+		int y = (Y);
+		printf("Starting Quick Composition Mode:");
+		print(VHX4RC_StartQuickCompMode());
+		Sleep(100);
+		printf("Start QuickComp:");
+		print(VHX4RC_StartQuickComp(dummyHWND, WM_APP_QUICK_COMP_COMPLETED));
+		
+		//filename here
+		string filenameinit = Path;
+		filenameinit = filenameinit + ".jpg";
+
+		LPCSTR filename = filenameinit.c_str();
+		printf("Stop QuickComp:");
+		print(VHX4RC_StopQuickComp());
+		Sleep(12000);
+		printf("Save Image:");
+		print(VHX4RC_SaveImageRemotePCA(0, filename));
+		Sleep(100);
+		printf("End Qucick Compostion Mode:");
+		print(VHX4RC_StopQuickCompMode());
+	//}
+
+
+	VHX4RC_Exit(FALSE);
+	Sleep(100);
+	return (0);
+}
+//C:\Users\khanf\source\repos\testingrun\x64\Release\testingrun.exe
